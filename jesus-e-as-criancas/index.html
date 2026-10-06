@@ -233,13 +233,13 @@ src="https://www.facebook.com/tr?id=1412761043683210&ev=PageView&noscript=1"
 
 <div id="etapa2" hidden>
 <h2 tabindex="-1">Seu presente está quase pronto! 🎁</h2>
-<p class="intro">Antes de baixar, visite nosso Instagram e siga o Pequenos de Fé para acompanhar novas histórias e atividades com Ester e Fê.</p>
+<p class="intro">Antes de pegar seu presente, conheça nosso Instagram e siga o Pequenos de Fé para acompanhar novas histórias e atividades com Ester e Fê. 💛</p>
 <div class="ig"><div class="ig-head"><img src="../assets/logo-pequenos-de-fe.webp" alt=""><div><b>Pequenos de Fé</b><span>@oficialpequenosdefe</span></div></div>
 <div class="ig-grid"><img src="../assets/jesus-e-as-criancas/ester-fe-convite.jpg" width="994" height="592" alt="Ester e Fê com a Bíblia" loading="lazy"><img src="../assets/jesus-e-as-criancas/ester-fe-oracao.jpg" width="994" height="592" alt="Ester e Fê orando" loading="lazy"></div>
 <p class="ig-cap">Imagens de Ester e Fê, do Pequenos de Fé.</p></div>
 <a class="cta ig-btn" id="btnInsta" href="https://www.instagram.com/oficialpequenosdefe/" target="_blank" rel="noopener">Abrir Instagram e seguir ↗</a>
 <span class="alt">Se o aplicativo não abrir, acesse <a href="https://www.instagram.com/oficialpequenosdefe/" target="_blank" rel="noopener" class="js-insta-alt">instagram.com/oficialpequenosdefe</a></span>
-<button class="cta cont" type="button" id="btnContinuar">Continuar e baixar o e-book</button>
+<div id="liberado" aria-live="polite"><button class="cta cont" type="button" id="btnContinuar" hidden>Baixar meu e-book 📖</button></div>
 </div>
 
 <div id="etapa3" hidden class="thanks">
@@ -354,8 +354,11 @@ $('form').addEventListener('submit',function(e){
 });
 
 // Etapa 2: o botão do Instagram apenas abre o perfil em outra aba.
-$('btnInsta').addEventListener('click',function(){track('CliqueAbrirInstagram',{},true)});
-document.querySelector('.js-insta-alt').addEventListener('click',function(){track('CliqueAbrirInstagram',{link:'alternativo'},true)});
+// O clique no Instagram apenas abre o perfil e libera o botão de download (não verifica se a pessoa seguiu).
+function liberarDownload(){ss('pf_jc_ig','1');$('btnContinuar').hidden=false}
+if(ss('pf_jc_ig')==='1')$('btnContinuar').hidden=false;
+$('btnInsta').addEventListener('click',function(){track('CliqueAbrirInstagram',{},true);liberarDownload()});
+document.querySelector('.js-insta-alt').addEventListener('click',function(){track('CliqueAbrirInstagram',{link:'alternativo'},true);liberarDownload()});
 $('btnContinuar').addEventListener('click',function(){
  track('CliqueContinuarDownload',{},true);
  ss('pf_jc_etapa','3');mostrar(3,true);
