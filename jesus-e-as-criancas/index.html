@@ -109,6 +109,7 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem)}
 .ig-cap{font-size:.78rem;color:var(--muted);margin:10px 0 0;text-align:center}
 .ig-btn{background:var(--navy);color:#fff;box-shadow:0 12px 26px rgba(6,41,69,.25);width:100%}
 .ig-btn:hover{background:var(--navy2);color:#fff}
+.pular{display:block;margin:16px auto 0;background:none;border:0;padding:8px 6px;color:var(--muted);font:600 .92rem 'DM Sans',sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;animation:surgir .5s ease}.pular:hover{color:var(--navy)}@keyframes surgir{from{opacity:0}to{opacity:1}}
 .alt{display:block;text-align:center;margin-top:10px;font-size:.88rem;color:var(--muted)}
 .alt a{color:var(--navy);font-weight:700;text-decoration:underline}
 .cont{width:100%;margin-top:14px}
@@ -233,13 +234,13 @@ src="https://www.facebook.com/tr?id=1412761043683210&ev=PageView&noscript=1"
 
 <div id="etapa2" hidden>
 <h2 tabindex="-1">Seu presente está quase pronto! 🎁</h2>
-<p class="intro">Antes de pegar seu presente, conheça nosso Instagram e siga o Pequenos de Fé para acompanhar novas histórias e atividades com Ester e Fê. 💛</p>
+<p class="intro">Enquanto preparamos seu material, aproveite para visitar nosso Instagram e seguir o Pequenos de Fé. Assim você acompanha novas histórias e atividades com Ester e Fê. 💛</p>
 <div class="ig"><div class="ig-head"><img src="../assets/logo-pequenos-de-fe.webp" alt=""><div><b>Pequenos de Fé</b><span>@oficialpequenosdefe</span></div></div>
 <div class="ig-grid"><img src="../assets/jesus-e-as-criancas/ester-fe-convite.jpg" width="994" height="592" alt="Ester e Fê com a Bíblia" loading="lazy"><img src="../assets/jesus-e-as-criancas/ester-fe-oracao.jpg" width="994" height="592" alt="Ester e Fê orando" loading="lazy"></div>
 <p class="ig-cap">Imagens de Ester e Fê, do Pequenos de Fé.</p></div>
 <a class="cta ig-btn" id="btnInsta" href="https://www.instagram.com/oficialpequenosdefe/" target="_blank" rel="noopener">Abrir Instagram e seguir ↗</a>
 <span class="alt">Se o aplicativo não abrir, acesse <a href="https://www.instagram.com/oficialpequenosdefe/" target="_blank" rel="noopener" class="js-insta-alt">instagram.com/oficialpequenosdefe</a></span>
-<div id="liberado" aria-live="polite"><button class="cta cont" type="button" id="btnContinuar" hidden>Baixar meu e-book 📖</button></div>
+<div id="liberado" aria-live="polite"><button class="cta cont" type="button" id="btnContinuar" hidden>Baixar meu e-book 📖</button><button class="pular" type="button" id="btnPular" hidden>Prefiro continuar para o download →</button></div>
 </div>
 
 <div id="etapa3" hidden class="thanks">
@@ -342,7 +343,7 @@ $('form').addEventListener('submit',function(e){
  .then(function(res){
    if(res&&res.ok){
      if(!leadEnviado){leadEnviado=true;track('Lead',{content_category:'E-book gratuito'})}
-     ss('pf_jc_etapa','2');mostrar(2,true);
+     ss('pf_jc_etapa','2');mostrar(2,true);agendarPular();
    }else{
      var m=(res&&MSG[res.erro])||'Não conseguimos salvar seu cadastro agora. Tente novamente em instantes.';
      if(res&&res.erro==='encerrada'){aberta=false}
@@ -355,17 +356,23 @@ $('form').addEventListener('submit',function(e){
 
 // Etapa 2: o botão do Instagram apenas abre o perfil em outra aba.
 // O clique no Instagram apenas abre o perfil e libera o botão de download (não verifica se a pessoa seguiu).
-function liberarDownload(){ss('pf_jc_ig','1');$('btnContinuar').hidden=false}
+function liberarDownload(){ss('pf_jc_ig','1');$('btnContinuar').hidden=false;$('btnPular').hidden=true}
 if(ss('pf_jc_ig')==='1')$('btnContinuar').hidden=false;
+// Opção secundária: após alguns segundos na Etapa 2, permite seguir para o download sem abrir o Instagram.
+var timerPular=null;
+function agendarPular(){if(timerPular||ss('pf_jc_ig')==='1')return;timerPular=setTimeout(function(){if(ss('pf_jc_ig')!=='1')$('btnPular').hidden=false},5000)}
+if(+(ss('pf_jc_etapa')||1)===2)agendarPular();
 $('btnInsta').addEventListener('click',function(){track('CliqueAbrirInstagram',{},true);liberarDownload()});
 document.querySelector('.js-insta-alt').addEventListener('click',function(){track('CliqueAbrirInstagram',{link:'alternativo'},true);liberarDownload()});
-$('btnContinuar').addEventListener('click',function(){
- track('CliqueContinuarDownload',{},true);
+function irParaDownload(botao){
+ track('CliqueContinuarDownload',{botao:botao},true);
  ss('pf_jc_etapa','3');mostrar(3,true);
  // tenta iniciar o download (medimos o início/clique, não a conclusão)
  track('InicioDownloadEbook',{tipo:'automatico'},true);
  try{var a=document.createElement('a');a.href=$('btnBaixar').getAttribute('href');a.download='Jesus-e-as-Criancas-Pequenos-de-Fe.pdf';document.body.appendChild(a);a.click();a.remove()}catch(e){}
-});
+}
+$('btnContinuar').addEventListener('click',function(){irParaDownload('apos-instagram')});
+$('btnPular').addEventListener('click',function(){irParaDownload('sem-instagram')});
 $('btnBaixar').addEventListener('click',function(){track('InicioDownloadEbook',{tipo:'botao'},true)});
 $('btnAbrir').addEventListener('click',function(){track('InicioDownloadEbook',{tipo:'abrir-pdf'},true)});
 })();
