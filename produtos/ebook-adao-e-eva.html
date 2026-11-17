@@ -87,6 +87,11 @@ footer a{color:var(--sun)}
 .sticky{display:none}
 @media(max-width:850px){.cards4{grid-template-columns:repeat(2,1fr)}.about,.emo-grid{grid-template-columns:1fr}.cards3{grid-template-columns:1fr}.club{grid-template-columns:1fr;text-align:center}.top a.back{display:none}section{padding:56px 0}.hero{padding:44px 0 56px}}
 @media(max-width:560px){.wrap{padding:0 16px}.cards4{grid-template-columns:1fr}.sticky{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid #f0e4c2;padding:10px 14px;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 -8px 24px rgba(6,41,69,.12)}.sticky b{font:700 1.3rem Fredoka;color:var(--navy)}.sticky a{background:var(--gold);color:var(--navy);font-weight:800;padding:13px 20px;border-radius:999px;flex:1;text-align:center}footer{padding-bottom:84px}}
+
+.ebook-preview-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,3vw,24px);max-width:640px;margin:24px auto 0}
+.ebook-preview-grid a {display:block;border-radius:14px;background:#fff;padding:6px;box-shadow:0 6px 24px #09264520}
+.ebook-preview-grid a:focus-visible {outline:3px solid #092645;outline-offset:4px}
+.ebook-preview-grid img {display:block;width:100%;height:auto;border-radius:9px}
 </style></head><body>
 <header class="top"><div class="wrap"><a class="brand" href="../index.html"><img src="../assets/logo-pequenos-de-fe.webp" alt="Pequenos de Fé">Pequenos de Fé</a><a class="back" href="../index.html#catalogo">← Ver todos os materiais</a><a class="pill" href="#comprar">Comprar</a></div></header>
 <main>
@@ -97,6 +102,22 @@ footer a{color:var(--sun)}
 <p class="line">O Início de Tudo. Um ebook ilustrado do Pequenos de Fé, para ler e conversar em família.</p>
 <a class="cta" href="https://pay.kiwify.com.br/L2Eora6" target="_blank" rel="noopener">QUERO ESTE EBOOK ↗</a>
 <div class="price-note"><b>R$ 7,99</b> · pagamento único</div></div></section>
+
+
+<section class="bg-cream" aria-labelledby="ebook-preview-title">
+  <div class="wrap center">
+    <h2 id="ebook-preview-title">Veja por dentro</h2>
+    <p class="lead">Toque em uma página para ampliar e ler um trechinho.</p>
+    <div class="ebook-preview-grid">
+      <a href="../assets/adao-e-eva-amostra-1.jpg" target="_blank" rel="noopener" aria-label="Ampliar a página sobre o Jardim do Éden em nova aba">
+        <img src="../assets/adao-e-eva-amostra-1.jpg" alt="Página do e-book sobre o Jardim do Éden" loading="lazy">
+      </a>
+      <a href="../assets/adao-e-eva-amostra-2.jpg" target="_blank" rel="noopener" aria-label="Ampliar a página sobre a criação de Eva em nova aba">
+        <img src="../assets/adao-e-eva-amostra-2.jpg" alt="Página do e-book sobre a criação de Eva" loading="lazy">
+      </a>
+    </div>
+  </div>
+</section>
 
 <section class="bg-cream"><div class="wrap center"><h2>Uma história para ler junto e conversar depois</h2><p class="lead">Para os pais que querem apresentar a Bíblia aos filhos com leveza, imagens bonitas e linguagem simples.</p><div class="cards4"><div class="card"><div class="ic">📚</div><b>Ebook ilustrado</b><small>História contada com ilustrações que despertam a imaginação.</small></div><div class="card"><div class="ic">📖</div><b>Base bíblica</b><small>Uma das primeiras histórias da Bíblia, apresentada de forma simples.</small></div><div class="card"><div class="ic">👨‍👩‍👧</div><b>Leitura em família</b><small>Um convite para sentar juntos e conversar sobre o que a história ensina.</small></div><div class="card"><div class="ic">📲</div><b>Acesso digital</b><small>Receba o material após a compra e leia quando quiser.</small></div></div></div></section>
 
